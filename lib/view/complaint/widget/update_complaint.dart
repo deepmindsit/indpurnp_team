@@ -296,6 +296,7 @@ class _UpdateComplaintState extends State<UpdateComplaint> {
     final isDisabled = rollId == '9';
     return AppDropdownField(
       isDynamic: true,
+      isShowClose: false,
       title: 'Status',
       value: controller.selectedStatus.value,
       items: controller.statusList,

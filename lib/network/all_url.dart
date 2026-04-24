@@ -12,8 +12,9 @@ Future<http.Client> getHttpClient() async {
 class AllUrl {
   // static const String baseUrl =
   //     "https://192.168.29.102/pnp_v2/api/team/v1";
-  static const String baseUrl = "https://myindapurnp.diabot.in/api/team/v1";
-  // static const String baseUrl = "http://192.168.29.37/myindapurnp/api/team/v1";
+  // static const String baseUrl = "https://myindapurnp.diabot.in/api/team/v1";
+  // static const String baseUrl = "https://beta.indapurnp.in/api/team/v1";
+  static const String baseUrl = "https://indapurnp.in/api/team/v1";
   static const String login = '$baseUrl/sign-in';
   static const String getStatus = '$baseUrl/get-complaint-status';
   static const String getComplaint = '$baseUrl/get-complaint';
