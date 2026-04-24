@@ -42,7 +42,7 @@ class DioClient {
           // if (kDebugMode) {
           //   debugPrint('📤 Request: ${options.method} ${options.uri}');
           //   debugPrint('Headers: ${options.headers}');
-            debugPrint('Body: ${options.data}');
+          //   debugPrint('Body: ${options.data}');
           // }
 
           return handler.next(options);
