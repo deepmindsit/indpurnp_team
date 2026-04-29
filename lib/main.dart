@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
           );
           return MediaQuery(data: newMediaQueryData, child: child!);
         },
-        title: 'Indapur NP Team',
+        title: 'Indapur Jansetu',
         initialBinding: InitialBindings(),
         defaultTransition: Transition.fadeIn,
         transitionDuration: const Duration(milliseconds: 300),
