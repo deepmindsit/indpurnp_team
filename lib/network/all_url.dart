@@ -16,6 +16,7 @@ class AllUrl {
   // static const String baseUrl = "https://beta.indapurnp.in/api/team/v1";
   static const String baseUrl = "https://indapurnp.in/api/team/v1";
   static const String login = '$baseUrl/sign-in';
+  static const String register = '$baseUrl/register';
   static const String getStatus = '$baseUrl/get-complaint-status';
   static const String getComplaint = '$baseUrl/get-complaint';
   static const String addComplaintComment = '$baseUrl/add-complaint-comment';
