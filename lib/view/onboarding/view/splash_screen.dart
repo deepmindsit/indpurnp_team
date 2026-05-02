@@ -38,34 +38,51 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => Material(
-        surfaceTintColor: Colors.white,
-        color: Colors.white,
-        child: Container(
-          color: Colors.white,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              AnimatedCrossFade(
-                firstCurve: Curves.fastOutSlowIn,
-                crossFadeState: !controller.expanded.value
-                    ? CrossFadeState.showFirst
-                    : CrossFadeState.showSecond,
-                duration: controller.transitionDuration,
-                firstChild: Container(),
-                secondChild: _logoRemainder(),
-                alignment: Alignment.centerLeft,
-                sizeCurve: Curves.easeInOut,
+    return Scaffold(
+      body: SizedBox.expand(
+        child: Stack(
+          children: [
+            /// Full Screen Background Image
+            Positioned.fill(
+              child: Image.asset(
+                Images.splashScreen,
+                fit: BoxFit.cover,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
+
+
+    //   Obx(
+    //   () => Material(
+    //     surfaceTintColor: Colors.white,
+    //     color: Colors.white,
+    //     child: Container(
+    //       color: Colors.white,
+    //       child: Row(
+    //         mainAxisAlignment: MainAxisAlignment.center,
+    //         children: [
+    //           AnimatedCrossFade(
+    //             firstCurve: Curves.fastOutSlowIn,
+    //             crossFadeState: !controller.expanded.value
+    //                 ? CrossFadeState.showFirst
+    //                 : CrossFadeState.showSecond,
+    //             duration: controller.transitionDuration,
+    //             firstChild: Container(),
+    //             secondChild: _logoRemainder(),
+    //             alignment: Alignment.centerLeft,
+    //             sizeCurve: Curves.easeInOut,
+    //           ),
+    //         ],
+    //       ),
+    //     ),
+    //   ),
+    // );
   }
 
-  Widget _logoRemainder() {
-    return Image.asset(Images.fevicon, width: Get.width * 0.8.h);
-  }
+  // Widget _logoRemainder() {
+  //   return Image.asset(Images.fevicon, width: Get.width * 0.8.h);
+  // }
 }
