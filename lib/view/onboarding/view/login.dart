@@ -7,49 +7,56 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(horizontal: 20.w),
-        child: Form(
-          key: controller.formKey,
-          autovalidateMode: AutovalidateMode.onUserInteraction,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: Get.height * 0.1.h),
-              Center(
-                child: Image.asset(Images.logo512, height: 180.h, width: 180.w),
-              ),
-              SizedBox(height: 20.h),
-              Center(
-                child: CustomText(
-                  title: 'Sign In',
-                  fontSize: 24.sp,
-                  fontWeight: FontWeight.bold,
+    return GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: SingleChildScrollView(
+          padding: EdgeInsets.symmetric(horizontal: 20.w),
+          child: Form(
+            key: controller.formKey,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: Get.height * 0.1.h),
+                Center(
+                  child: Image.asset(
+                    Images.logo512,
+                    height: 180.h,
+                    width: 180.w,
+                  ),
                 ),
-              ),
-              SizedBox(height: 8.h),
-              Center(
-                child: CustomText(
-                  title: 'Please enter your details to proceed further.',
-                  fontSize: 14.sp,
-                  maxLines: 2,
-                  color: primaryGrey,
-                  textAlign: TextAlign.center,
+                SizedBox(height: 20.h),
+                Center(
+                  child: CustomText(
+                    title: 'Sign In',
+                    fontSize: 24.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-              SizedBox(height: 30.h),
-              _buildLabel('Username'.tr),
-              _buildUserNameField(),
-              SizedBox(height: 16.h),
-              _buildLabel('Password'.tr),
-              _buildPasswordField(),
-              SizedBox(height: 24.h),
-              buildLoginButton(),
-              SizedBox(height: 40.h),
-              _termsAndCdn(),
-            ],
+                SizedBox(height: 8.h),
+                Center(
+                  child: CustomText(
+                    title: 'Please enter your details to proceed further.',
+                    fontSize: 14.sp,
+                    maxLines: 2,
+                    color: primaryGrey,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                SizedBox(height: 30.h),
+                _buildLabel('Username'.tr),
+                _buildUserNameField(),
+                SizedBox(height: 16.h),
+                _buildLabel('Password'.tr),
+                _buildPasswordField(),
+                SizedBox(height: 24.h),
+                buildLoginButton(),
+                SizedBox(height: 40.h),
+                _termsAndCdn(),
+              ],
+            ),
           ),
         ),
       ),
@@ -118,6 +125,7 @@ class LoginScreen extends StatelessWidget {
           onPressed: controller.isLoading.isTrue
               ? null
               : () async {
+                  FocusManager.instance.primaryFocus?.unfocus();
                   if (controller.formKey.currentState!.validate()) {
                     await controller.login();
                   }
@@ -136,8 +144,6 @@ class LoginScreen extends StatelessWidget {
       ),
     );
   }
-
-
 
   Widget _termsAndCdn() {
     return Column(
@@ -210,7 +216,6 @@ class LoginScreen extends StatelessWidget {
       ],
     );
   }
-
 
   // Widget _termsAndCdn() {
   //   return Column(

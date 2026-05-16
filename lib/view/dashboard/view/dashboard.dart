@@ -257,10 +257,28 @@ class _DashboardPageState extends State<DashboardPage> {
                           centerSpaceColor: Colors.white,
                           sectionsSpace: 2,
                           borderData: FlBorderData(show: false),
+                          pieTouchData: PieTouchData(
+                            enabled: true,
+                            touchCallback: (event, pieTouchResponse) {
+                              if (!event.isInterestedForInteractions ||
+                                  pieTouchResponse == null ||
+                                  pieTouchResponse.touchedSection == null) {
+                                controller.touchedIndex.value = -1;
+                                return;
+                              }
+
+                              controller.touchedIndex.value = pieTouchResponse
+                                  .touchedSection!
+                                  .touchedSectionIndex;
+                            },
+                          ),
+
                           sections: [
                             PieChartSectionData(
                               value: completed.toDouble(),
-                              radius: 28.r,
+                              radius: controller.touchedIndex.value == 0
+                                  ? 35.r
+                                  : 28.r,
                               color: Colors.green,
                               title:
                                   "${percent(completed).toStringAsFixed(0)}%",
@@ -272,7 +290,9 @@ class _DashboardPageState extends State<DashboardPage> {
                             ),
                             PieChartSectionData(
                               value: inProgress.toDouble(),
-                              radius: 26.r,
+                              radius: controller.touchedIndex.value == 1
+                                  ? 35.r
+                                  : 26.r,
                               color: Colors.blue,
                               title:
                                   "${percent(inProgress).toStringAsFixed(0)}%",
@@ -284,7 +304,9 @@ class _DashboardPageState extends State<DashboardPage> {
                             ),
                             PieChartSectionData(
                               value: pending.toDouble(),
-                              radius: 24.r,
+                              radius: controller.touchedIndex.value == 2
+                                  ? 35.r
+                                  : 24.r,
                               color: Colors.orange,
                               title: "${percent(pending).toStringAsFixed(0)}%",
                               titleStyle: TextStyle(
@@ -295,7 +317,9 @@ class _DashboardPageState extends State<DashboardPage> {
                             ),
                             PieChartSectionData(
                               value: rejected.toDouble(),
-                              radius: 22.r,
+                              radius: controller.touchedIndex.value == 3
+                                  ? 35.r
+                                  : 22.r,
                               color: Colors.red,
                               title: "${percent(rejected).toStringAsFixed(0)}%",
                               titleStyle: TextStyle(
@@ -343,6 +367,7 @@ class _DashboardPageState extends State<DashboardPage> {
                       completed,
                       Colors.green,
                       percent(completed),
+                      controller.touchedIndex.value == 0,
                     ),
                     SizedBox(height: 12.h),
                     _legendItem(
@@ -350,6 +375,7 @@ class _DashboardPageState extends State<DashboardPage> {
                       inProgress,
                       Colors.blue,
                       percent(inProgress),
+                      controller.touchedIndex.value == 1,
                     ),
                     SizedBox(height: 12.h),
                     _legendItem(
@@ -357,6 +383,7 @@ class _DashboardPageState extends State<DashboardPage> {
                       pending,
                       Colors.orange,
                       percent(pending),
+                      controller.touchedIndex.value == 2,
                     ),
                     SizedBox(height: 12.h),
                     _legendItem(
@@ -364,6 +391,7 @@ class _DashboardPageState extends State<DashboardPage> {
                       rejected,
                       Colors.red,
                       percent(rejected),
+                      controller.touchedIndex.value == 3,
                     ),
                   ],
                 ),
@@ -375,12 +403,18 @@ class _DashboardPageState extends State<DashboardPage> {
     );
   }
 
-  Widget _legendItem(String label, int count, Color color, double percent) {
+  Widget _legendItem(
+    String label,
+    int count,
+    Color color,
+    double percent,
+    bool isSelected,
+  ) {
     return Row(
       children: [
         Container(
-          width: 14.w,
-          height: 14.h,
+          width: isSelected ? 18.w : 14.w,
+          height: isSelected ? 18.h : 14.h,
           margin: EdgeInsets.only(right: 10.w),
           decoration: BoxDecoration(
             color: color,
@@ -399,8 +433,8 @@ class _DashboardPageState extends State<DashboardPage> {
             title: "$label ($count)",
             fontSize: 12.sp,
             textAlign: TextAlign.start,
-            fontWeight: FontWeight.w500,
-            color: Colors.black87,
+            fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+            color: isSelected ? color : Colors.black87,
           ),
         ),
         Container(
@@ -632,14 +666,36 @@ class _DashboardPageState extends State<DashboardPage> {
                   child: PieChart(
                     duration: const Duration(milliseconds: 800),
                     curve: Curves.easeInOutCubic,
+
                     PieChartData(
-                      sections: chartData.map((entry) {
+                      pieTouchData: PieTouchData(
+                        enabled: true,
+                        touchCallback: (event, pieTouchResponse) {
+                          if (!event.isInterestedForInteractions ||
+                              pieTouchResponse == null ||
+                              pieTouchResponse.touchedSection == null) {
+                            controller.touchedTypeIndex.value = -1;
+                            return;
+                          }
+
+                          controller.touchedTypeIndex.value = pieTouchResponse
+                              .touchedSection!
+                              .touchedSectionIndex;
+                        },
+                      ),
+                      sections: chartData.toList().asMap().entries.map((item) {
+                        final index = item.key;
+                        final entry = item.value;
+
                         final color = getColor(entry.key);
+
                         return PieChartSectionData(
                           color: color,
                           value: entry.value.toDouble(),
                           title: "${entry.value.toInt()}%",
-                          radius: 24.r,
+                          radius: controller.touchedTypeIndex.value == index
+                              ? 35.r
+                              : 24.r,
                           titleStyle: TextStyle(
                             fontSize: 10.sp,
                             fontWeight: FontWeight.bold,
@@ -659,13 +715,18 @@ class _DashboardPageState extends State<DashboardPage> {
                 child: Column(
                   spacing: 8,
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: chartData.map((entry) {
-                    final color = getColor(entry.key);
+                  children: chartData.toList().asMap().entries.map((item) {
+                    final index = item.key;
+                    final data = item.value;
+
+                    final color = getColor(data.key);
+
                     return _legendItem(
-                      entry.key,
-                      entry.value.toInt(),
+                      data.key,
+                      data.value.toInt(),
                       color,
-                      entry.value.toDouble(),
+                      data.value.toDouble(),
+                      controller.touchedTypeIndex.value == index,
                     );
                   }).toList(),
                 ),

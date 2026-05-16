@@ -119,6 +119,9 @@ class _UpdateComplaintState extends State<UpdateComplaint> {
             child: AbsorbPointer(
               absorbing: isBlocked,
               child: AppDropdownField(
+                fillColor: isDisabled
+                    ? Colors.grey.withValues(alpha: 0.35)
+                    : Colors.white,
                 isEnabled: true,
                 isDynamic: true,
                 value: controller.selectedDepartment.value,
@@ -167,6 +170,9 @@ class _UpdateComplaintState extends State<UpdateComplaint> {
             child: AbsorbPointer(
               absorbing: isBlocked,
               child: AppDropdownField(
+                fillColor: isDisabled
+                    ? Colors.grey.withValues(alpha: 0.35)
+                    : Colors.white,
                 isEnabled: true,
                 isDynamic: true,
                 title: 'HOD',
@@ -220,6 +226,9 @@ class _UpdateComplaintState extends State<UpdateComplaint> {
           child: AbsorbPointer(
             absorbing: isBlocked,
             child: AppDropdownField(
+              fillColor: isDisabled
+                  ? Colors.grey.withValues(alpha: 0.35)
+                  : Colors.white,
               isDynamic: true,
               title: 'Ward',
               value:
@@ -268,6 +277,9 @@ class _UpdateComplaintState extends State<UpdateComplaint> {
               absorbing: isBlocked,
               child: AppDropdownField(
                 isEnabled: true,
+                fillColor: isDisabled
+                    ? Colors.grey.withValues(alpha: 0.35)
+                    : Colors.white,
                 isDynamic: true,
                 title: 'Field Officer',
                 value: controller.selectedFieldOfficer.value,
@@ -297,6 +309,9 @@ class _UpdateComplaintState extends State<UpdateComplaint> {
     return AppDropdownField(
       isDynamic: true,
       isShowClose: false,
+      fillColor: isDisabled
+          ? Colors.grey.withValues(alpha: 0.35)
+          : Colors.white,
       title: 'Status',
       value: controller.selectedStatus.value,
       items: controller.statusList,
@@ -313,7 +328,6 @@ class _UpdateComplaintState extends State<UpdateComplaint> {
   Widget _buildUploadDocuments() {
     return Container(
       decoration: BoxDecoration(
-        // border: Border.all(width: 0.2),
         borderRadius: BorderRadius.circular(12),
         color: Colors.white,
       ),

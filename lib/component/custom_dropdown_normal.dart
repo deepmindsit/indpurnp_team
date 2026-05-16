@@ -14,6 +14,7 @@ class AppDropdownField extends StatelessWidget {
   final bool? isWithColor;
   final bool? isEnabled;
   final bool? isShowClose;
+  final Color? fillColor;
 
   const AppDropdownField({
     super.key,
@@ -30,6 +31,7 @@ class AppDropdownField extends StatelessWidget {
     this.isDynamic = false,
     this.isEnabled = true,
     this.isShowClose = true,
+    this.fillColor = Colors.white,
   });
 
   @override
@@ -63,7 +65,7 @@ class AppDropdownField extends StatelessWidget {
               contentPadding: EdgeInsets.all(12.w),
               isDense: true,
               filled: true,
-              fillColor: Colors.white,
+              fillColor: fillColor,
               focusedBorder: buildOutlineInputBorder(),
               enabledBorder: buildOutlineInputBorder(),
               errorBorder: OutlineInputBorder(

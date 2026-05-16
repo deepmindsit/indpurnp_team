@@ -17,6 +17,9 @@ class DashboardController extends GetxController {
   final recentComplaint = [].obs;
   final complaintTypeData = {}.obs;
 
+  RxInt touchedIndex = (-1).obs;
+  RxInt touchedTypeIndex = (-1).obs;
+
   Future<void> getDashboard({bool load = true}) async {
     if (load) {
       isLoading.value = true;
