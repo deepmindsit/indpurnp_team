@@ -13,8 +13,8 @@ class AllUrl {
   // static const String baseUrl =
   //     "https://192.168.29.102/pnp_v2/api/team/v1";
   // static const String baseUrl = "https://myindapurnp.diabot.in/api/team/v1";
-  // static const String baseUrl = "https://beta.indapurnp.in/api/team/v1";
-  static const String baseUrl = "https://indapurnp.in/api/team/v1";
+  static const String baseUrl = "http://192.168.29.37/myindapurnp/api/team/v1";
+  // static const String baseUrl = "https://indapurnp.in/api/team/v1";
   static const String login = '$baseUrl/sign-in';
   static const String register = '$baseUrl/register';
   static const String getStatus = '$baseUrl/get-complaint-status';
@@ -41,9 +41,14 @@ class AllUrl {
   static const String getDashboard = '$baseUrl/get-dashboard';
   static const String deleteAccount = '$baseUrl/delete-account';
   static const String getComplaintType = '$baseUrl/get-complaint-type';
-  //pending
-
   static const String updateFirebaseToken = "$baseUrl/update-firebase-token";
   static const String getNotification = "$baseUrl/get-notification";
   static const String readNotification = "$baseUrl/read-notification";
+
+  //pending//
+  static const String getDept = "$baseUrl/get-team-department-list";
+  static const String getWardList = "$baseUrl/get-team-ward-list";
+  static const String getCompType = "$baseUrl/get-team-complaint-type-list";
+  static const String addCorpComplaint = "$baseUrl/add-corporator-complaint";
+  static const String getCorpComp = "$baseUrl/get-corporator-complaints";
 }

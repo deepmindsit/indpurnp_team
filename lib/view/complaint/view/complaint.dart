@@ -31,11 +31,23 @@ class _ComplaintScreenState extends State<ComplaintScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: CustomAppBar(
-        title: 'Complaints',
-        showBackButton: false,
-        titleSpacing: null,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        surfaceTintColor: Colors.white,
+        title: TranslatedText(
+          title: 'Complaints',
+          fontSize: 22.sp,
+          fontWeight: FontWeight.bold,
+          // color: Colors.black,
+        ),
         actions: [
+          IconButton(
+            onPressed: () {
+              Get.toNamed(Routes.departmentScreen);
+            },
+            icon: HugeIcon(icon: HugeIcons.strokeRoundedAdd01),
+          ),
+
           IconButton(
             onPressed: () {
               Get.bottomSheet(isScrollControlled: true, ComplaintFilter());
@@ -43,77 +55,119 @@ class _ComplaintScreenState extends State<ComplaintScreen> {
             icon: HugeIcon(icon: HugeIcons.strokeRoundedFilter),
           ),
         ],
+        elevation: 0,
+        // bottom: PreferredSize(
+        //   preferredSize: const Size.fromHeight(50),
+        //   child: Container(
+        //     margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        //     decoration: BoxDecoration(
+        //       color: Colors.grey.shade200,
+        //       borderRadius: BorderRadius.circular(12),
+        //     ),
+        //     child: TabBar(
+        //       dividerColor: Colors.transparent,
+        //       indicator: BoxDecoration(
+        //         color: c.primaryColor,
+        //         borderRadius: BorderRadius.circular(12),
+        //       ),
+        //       labelColor: Colors.white,
+        //       unselectedLabelColor: Colors.black87,
+        //       tabs: const [
+        //         Tab(text: "All Complaints"),
+        //         Tab(text: "My Complaints"),
+        //       ],
+        //     ),
+        //   ),
+        // ),
       ),
-      body: Obx(() {
-        final complaints = controller.complaintList;
 
-        if (controller.isLoading.isTrue) {
-          return _buildShimmer();
-        }
+      // CustomAppBar(
+      //   title: 'Complaints',
+      //   showBackButton: false,
+      //   titleSpacing: null,
+      //   actions: [
+      //     IconButton(
+      //       onPressed: () {
+      //         Get.bottomSheet(isScrollControlled: true, ComplaintFilter());
+      //       },
+      //       icon: HugeIcon(icon: HugeIcons.strokeRoundedFilter),
+      //     ),
+      //   ],
+      // ),
+      body: _buildAllComplaint(),
+    );
+  }
 
-        if (complaints.isEmpty) {
-          return _buildEmptyState();
-        }
-        return NotificationListener<ScrollNotification>(
-          onNotification: (scrollNotification) {
-            if (scrollNotification is ScrollEndNotification &&
-                scrollNotification.metrics.pixels ==
-                    scrollNotification.metrics.maxScrollExtent) {
-              controller.getComplaintLoadMore();
-            }
-            return true;
-          },
-          child: SingleChildScrollView(
-            child: Column(
-              spacing: 10,
-              children: [
-                LiveList.options(
-                  shrinkWrap: true,
-                  physics: BouncingScrollPhysics(),
-                  options: LiveOptions(
-                    delay: Duration.zero,
-                    showItemInterval: Duration(milliseconds: 100),
-                    showItemDuration: Duration(milliseconds: 250),
-                    reAnimateOnVisibility: false,
-                  ),
-                  itemCount: complaints.length,
-                  itemBuilder: (context, index, animation) {
-                    final ticket = complaints[index];
-                    return FadeTransition(
-                      opacity: animation,
-                      child: SlideTransition(
-                        position: Tween<Offset>(
-                          begin: Offset(0, 0.1),
-                          end: Offset.zero,
-                        ).animate(animation),
-                        child: GestureDetector(
-                          onTap: () => Get.toNamed(
-                            Routes.complaintDetails,
-                            arguments: {'id': ticket['id'].toString()},
-                          ),
-                          child: ComplaintCard(
-                            title: ticket['department'] ?? 'N/A',
-                            location:
-                                ticket['complaint_type'].toString().isNotEmpty
-                                ? ticket['complaint_type']?.toString() ?? 'N/A'
-                                : 'N/A',
-                            date: ticket['created_at'] ?? 'N/A',
-                            status: ticket['status'] ?? 'N/A',
-                            statusColor: ticket['status_color'] ?? Colors.grey,
-                            ticketNo: ticket['code'] ?? '',
-                          ),
+  Widget _buildAllComplaint() {
+    return Obx(() {
+      final complaints = controller.complaintList;
+
+      if (controller.isLoading.isTrue) {
+        return _buildShimmer();
+      }
+
+      if (complaints.isEmpty) {
+        return _buildEmptyState();
+      }
+      return NotificationListener<ScrollNotification>(
+        onNotification: (scrollNotification) {
+          if (scrollNotification is ScrollEndNotification &&
+              scrollNotification.metrics.pixels ==
+                  scrollNotification.metrics.maxScrollExtent) {
+            controller.getComplaintLoadMore();
+          }
+          return true;
+        },
+        child: SingleChildScrollView(
+          child: Column(
+            spacing: 10,
+            children: [
+              LiveList.options(
+                shrinkWrap: true,
+                physics: BouncingScrollPhysics(),
+                options: LiveOptions(
+                  delay: Duration.zero,
+                  showItemInterval: Duration(milliseconds: 100),
+                  showItemDuration: Duration(milliseconds: 250),
+                  reAnimateOnVisibility: false,
+                ),
+                itemCount: complaints.length,
+                itemBuilder: (context, index, animation) {
+                  final ticket = complaints[index];
+                  return FadeTransition(
+                    opacity: animation,
+                    child: SlideTransition(
+                      position: Tween<Offset>(
+                        begin: Offset(0, 0.1),
+                        end: Offset.zero,
+                      ).animate(animation),
+                      child: GestureDetector(
+                        onTap: () => Get.toNamed(
+                          Routes.complaintDetails,
+                          arguments: {'id': ticket['id'].toString()},
+                        ),
+                        child: ComplaintCard(
+                          title: ticket['department'] ?? 'N/A',
+                          location:
+                              ticket['complaint_type'].toString().isNotEmpty
+                              ? ticket['complaint_type']?.toString() ?? 'N/A'
+                              : 'N/A',
+                          date: ticket['created_at'] ?? 'N/A',
+                          status: ticket['status'] ?? 'N/A',
+                          statusColor: ticket['status_color'] ?? Colors.grey,
+                          ticketNo: ticket['code'] ?? '',
                         ),
                       ),
-                    );
-                  },
-                ),
-                complaints.isEmpty ? const SizedBox() : buildLoader(),
-              ],
-            ),
+                    ),
+                  );
+                },
+              ),
+              complaints.isEmpty ? const SizedBox() : buildLoader(),
+            ],
           ),
-        );
-      }),
-    );
+        ),
+      );
+    });
   }
 
   Widget buildLoader() {

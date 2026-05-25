@@ -32,11 +32,23 @@ abstract class ApiService {
     @Part(name: "lang") String lang,
   );
 
+  @POST(AllUrl.getCorpComp)
+  Future<dynamic> getCorpComp(
+    @Part(name: "user_id") String userId,
+    @Part(name: "page_no") String pageNo,
+    @Part(name: "department") List<String> deptIds,
+    @Part(name: "status") String status,
+    @Part(name: "complaint_type_id") String complaintTypeId,
+    @Part(name: "type") String source,
+    @Part(name: "date") String date,
+    @Part(name: "lang") String lang,
+  );
+
   @POST(AllUrl.getComplaintDetails)
   Future<dynamic> getComplaintDetails(
     @Part(name: "user_id") String userId,
     @Part(name: "complaint_id") String complaintId,
-      @Part(name: "lang") String lang,
+    @Part(name: "lang") String lang,
   );
 
   @POST(AllUrl.getComplaintType)
@@ -136,7 +148,6 @@ abstract class ApiService {
   Future<dynamic> getFileDetails(
     @Part(name: "user_id") String userId,
     @Part(name: "file_id") String fileId,
-
   );
 
   @POST(AllUrl.addFileComment)
@@ -151,9 +162,9 @@ abstract class ApiService {
 
   @POST(AllUrl.getDashboard)
   Future<dynamic> getDashboard(
-      @Part(name: "user_id") String userId,
-      @Part(name: "lang") String lang,
-      );
+    @Part(name: "user_id") String userId,
+    @Part(name: "lang") String lang,
+  );
 
   @POST(AllUrl.getKms)
   Future<dynamic> getKms(
@@ -178,6 +189,39 @@ abstract class ApiService {
     @Part(name: "user_id") String userId,
     @Part(name: "notification_id") String notificationId,
   );
+
+  @POST(AllUrl.getDept)
+  Future<dynamic> getTeamDept(
+    @Part(name: "user_id") String userId,
+    @Part(name: "lang") String lang,
+  );
+
+  @POST(AllUrl.getCompType)
+  Future<dynamic> getCompType(
+    @Part(name: "user_id") String userId,
+    @Part(name: "department_id") String deptId,
+    @Part(name: "lang") String lang,
+  );
+
+  @POST(AllUrl.getWardList)
+  Future<dynamic> getWardList(
+    @Part(name: "user_id") String userId,
+    @Part(name: "lang") String lang,
+  );
+
+  @POST(AllUrl.addCorpComplaint)
+  Future<dynamic> addCorpComplaint(
+    @Part(name: "user_id") String userId,
+    @Part(name: "department_id") String deptId,
+    @Part(name: "complaint_type_id") String typeId,
+    @Part(name: "landmark") String landMark,
+    @Part(name: "ward_id") String wardId,
+    @Part(name: "description") String description,
+    @Part(name: "lat_long") String latLong,
+    @Part(name: "address") String address,
+    @Part(name: "time") String time, {
+    @Part(name: 'attachments[]') List<MultipartFile>? attachment,
+  });
 }
 
 //

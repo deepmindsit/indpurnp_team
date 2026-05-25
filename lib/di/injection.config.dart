@@ -14,6 +14,8 @@ import 'package:get_it/get_it.dart' as _i174;
 import 'package:indapur_team/network/api_service.dart' as _i269;
 import 'package:indapur_team/network/register_module.dart' as _i652;
 import 'package:indapur_team/utils/translate_controller.dart' as _i282;
+import 'package:indapur_team/view/add_corp_complaint/controlller/add_corp_controller.dart'
+    as _i99;
 import 'package:indapur_team/view/complaint/controller/complaint_controller.dart'
     as _i869;
 import 'package:indapur_team/view/dashboard/controller/dashboard_controller.dart'
@@ -45,6 +47,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i361.Dio>(() => registerModule.dio);
     gh.lazySingleton<_i282.TranslateController>(
       () => _i282.TranslateController(),
+    );
+    gh.lazySingleton<_i99.AddCorpComplaintController>(
+      () => _i99.AddCorpComplaintController(),
     );
     gh.lazySingleton<_i869.ComplaintController>(
       () => _i869.ComplaintController(),

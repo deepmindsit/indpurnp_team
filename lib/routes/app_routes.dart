@@ -1,5 +1,6 @@
 import 'package:indapur_team/utils/exported_path.dart';
 
+import '../view/add_corp_complaint/view/department_screen.dart';
 import '../view/onboarding/view/register.dart';
 
 class AppRoutes {
@@ -15,5 +16,6 @@ class AppRoutes {
     GetPage(name: Routes.helpSupport, page: () => HelpSupport()),
     GetPage(name: Routes.deleteAccount, page: () => DeleteAccount()),
     GetPage(name: Routes.notificationList, page: () => NotificationList()),
+    GetPage(name: Routes.departmentScreen, page: () => DepartmentScreen()),
   ];
 }
