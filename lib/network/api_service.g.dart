@@ -70,7 +70,6 @@ class _ApiService implements ApiService {
     String pageNo,
     List<String> deptIds,
     String status,
-    String complaintTypeId,
     String source,
     String date,
     String lang,
@@ -85,7 +84,6 @@ class _ApiService implements ApiService {
       _data.fields.add(MapEntry('department', i));
     });
     _data.fields.add(MapEntry('status', status));
-    _data.fields.add(MapEntry('complaint_type_id', complaintTypeId));
     _data.fields.add(MapEntry('type', source));
     _data.fields.add(MapEntry('date', date));
     _data.fields.add(MapEntry('lang', lang));
@@ -110,7 +108,6 @@ class _ApiService implements ApiService {
     String pageNo,
     List<String> deptIds,
     String status,
-    String complaintTypeId,
     String source,
     String date,
     String lang,
@@ -125,7 +122,6 @@ class _ApiService implements ApiService {
       _data.fields.add(MapEntry('department', i));
     });
     _data.fields.add(MapEntry('status', status));
-    _data.fields.add(MapEntry('complaint_type_id', complaintTypeId));
     _data.fields.add(MapEntry('type', source));
     _data.fields.add(MapEntry('date', date));
     _data.fields.add(MapEntry('lang', lang));

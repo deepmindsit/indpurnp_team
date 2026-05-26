@@ -260,6 +260,11 @@ class _UpdateComplaintState extends State<UpdateComplaint> {
     final isBlocked = rollId == '5';
     final isDisabled = rollId == '9';
 
+    final selectedOfficer = controller.selectedFieldOfficer.value;
+    final isMatched = controller.fieldOfficerList.any(
+      (v) => v['id'].toString() == selectedOfficer,
+    );
+
     return Obx(() {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -275,14 +280,19 @@ class _UpdateComplaintState extends State<UpdateComplaint> {
             },
             child: AbsorbPointer(
               absorbing: isBlocked,
-              child: AppDropdownField(
+               child: AppDropdownField(
                 isEnabled: true,
                 fillColor: isDisabled
                     ? Colors.grey.withValues(alpha: 0.35)
                     : Colors.white,
                 isDynamic: true,
                 title: 'Field Officer',
-                value: controller.selectedFieldOfficer.value,
+                value:
+                    (selectedOfficer == null ||
+                        selectedOfficer.isEmpty ||
+                        !isMatched)
+                    ? null
+                    : selectedOfficer,
                 items: controller.fieldOfficerList,
                 hintText: 'Select field officer',
                 onChanged: (isDisabled || isBlocked)

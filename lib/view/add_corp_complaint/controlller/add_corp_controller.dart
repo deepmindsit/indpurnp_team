@@ -1,4 +1,7 @@
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:indapur_team/utils/exported_path.dart';
+import 'package:intl/intl.dart';
 
 @lazySingleton
 class AddCorpComplaintController extends GetxController {
@@ -50,84 +53,9 @@ class AddCorpComplaintController extends GetxController {
 
   final attachmentList = [].obs;
 
-  // void pickImage(ImageSource source) async {
-  //   isLoading(true);
-  //   final ImagePicker picker = ImagePicker();
-  //   final XFile? image = await picker.pickImage(
-  //     source: source,
-  //     imageQuality: 50,
-  //   );
-  //   if (image != null) {
-  //     File? img = File(image.path);
-  //     final details = await getDetails();
-  //     Map<String, dynamic> data = {
-  //       'path': img,
-  //       'from': 'camera',
-  //       'latLng': details['latLng'] ?? '',
-  //       'userLocation': details['userLocation'] ?? '',
-  //       'dateTime': details['dateTime'] ?? '',
-  //     };
-  //     imageList.add(data);
-  //     imageFile = img;
-  //   }
-  //   isLoading(false);
-  // }
-  //
-  // void pickPdf() async {
-  //   isLoading(true);
-  //   FilePickerResult? result = await FilePicker.pickFiles(
-  //     type: FileType.custom,
-  //     allowedExtensions: ['pdf'],
-  //   );
-  //   if (result != null) {
-  //     File file = File(result.files.single.path!);
-  //     Map<String, dynamic> data = {'path': file, 'from': 'pdf'};
-  //     imageList.add(data);
-  //   }
-  //   isLoading(false);
-  // }
-
-  // Future<void> showOptions() async {
-  //   return await Get.dialog(
-  //     AlertDialog(
-  //       backgroundColor: Colors.white,
-  //       surfaceTintColor: Colors.white,
-  //       title: const Text('Choose option'),
-  //       content: Column(
-  //         mainAxisSize: MainAxisSize.min,
-  //         children: [
-  //           ListTile(
-  //             leading: const Icon(Icons.camera_alt),
-  //             title: const Text('Take a photo'),
-  //             onTap: () async {
-  //               Get.back();
-  //               pickImage(ImageSource.camera);
-  //             },
-  //           ),
-  //           ListTile(
-  //             leading: const Icon(Icons.image_outlined),
-  //             title: const Text('Take from Gallery'),
-  //             onTap: () async {
-  //               Get.back();
-  //               pickImage(ImageSource.gallery);
-  //             },
-  //           ),
-  //           ListTile(
-  //             leading: const Icon(Icons.insert_drive_file),
-  //             title: const Text('Choose file'),
-  //             onTap: () async {
-  //               Get.back();
-  //               pickPdf();
-  //             },
-  //           ),
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
-
   Future<void> getComplaintType(String deptId) async {
     isLoading.value = true;
+    complaintTypeList.clear();
     final userId = await LocalStorage.getString('user_id') ?? '';
     try {
       final res = await _apiService.getCompType(
@@ -135,9 +63,6 @@ class AddCorpComplaintController extends GetxController {
         deptId,
         getIt<TranslateController>().lang.value == 'mr' ? 'mr' : 'en',
       );
-
-      print('getComplaintType');
-      print(res);
       if (res['common']['status'] == true) {
         complaintTypeList.value = res['data'] ?? [];
       }
@@ -151,14 +76,14 @@ class AddCorpComplaintController extends GetxController {
 
   Future<void> getWardList() async {
     isWardLoading.value = true;
+    wardList.clear();
+
     final userId = await LocalStorage.getString('user_id') ?? '';
     try {
       final res = await _apiService.getWardList(
         userId,
         getIt<TranslateController>().lang.value == 'mr' ? 'mr' : 'en',
       );
-      print('getWardList');
-      print(res);
       if (res['common']['status'] == true) {
         wardList.value = res['data'] ?? [];
       }
@@ -175,20 +100,7 @@ class AddCorpComplaintController extends GetxController {
     final userId = await LocalStorage.getString('user_id') ?? '';
     try {
       final docs = await prepareDocuments(attachmentList);
-
-      print('userId======>$userId');
-      print('deptId======>$deptId');
-      print(
-        'selectedType.value.toString()======>${selectedType.value.toString()}',
-      );
-      print(
-        'landMarkController.text======>${landMarkController.text.toString()}',
-      );
-      print('selectedWard.text======>${selectedWard.value.toString()}');
-      print(
-        'descriptionController.text======>${descriptionController.text.toString()}',
-      );
-      print('latLng.text======>${latLng.value.toString()}');
+      final details = await getDetails();
       final res = await _apiService.addCorpComplaint(
         userId,
         deptId,
@@ -196,9 +108,9 @@ class AddCorpComplaintController extends GetxController {
         landMarkController.text.trim(),
         selectedWard.value.toString(),
         descriptionController.text.trim(),
-        latLng.value,
-        '',
-        '',
+        details['latLng'] ?? '',
+        details['userLocation'] ?? '',
+        details['dateTime'] ?? '',
         attachment: docs,
       );
       if (res['common']['status'] == true) {
@@ -210,14 +122,16 @@ class AddCorpComplaintController extends GetxController {
         showToastNormal(res['common']['message'] ?? '');
       }
     } catch (e) {
+      debugPrint("Login error: $e");
       showToastNormal('Something went wrong. Please try again later.');
     } finally {
       isAddLoading.value = false;
     }
   }
 
-  resetForm() {
+  void resetForm() {
     attachmentList.clear();
+    complaintTypeList.clear();
     latLng.value = '';
     selectedWard.value = '';
     selectedType.value = '';
@@ -225,46 +139,50 @@ class AddCorpComplaintController extends GetxController {
     descriptionController.clear();
   }
 
-  // Future<Map<String, String>> getDetails() async {
-  //   String latLng = '';
-  //   String userLocation = '';
-  //   String dateTime = '';
-  //
-  //   final position = await _getCurrentPosition();
-  //   if (position != null) {
-  //     latLng = 'Lat: ${position.latitude}, Long: ${position.longitude}';
-  //     final placemarks = await placemarkFromCoordinates(
-  //       position.latitude,
-  //       position.longitude,
-  //     );
-  //     if (placemarks.isNotEmpty) {
-  //       final p = placemarks.first;
-  //       userLocation =
-  //       '${p.name}, ${p.subLocality}, ${p.locality}, ${p.administrativeArea}, ${p.country}';
-  //     }
-  //     dateTime = DateFormat('dd MMM yyyy hh:mm a').format(DateTime.now());
-  //   }
-  //
-  //   return {'latLng': latLng, 'userLocation': userLocation, 'dateTime': dateTime};
-  // }
-  //
-  // Future<Position?> _getCurrentPosition() async {
-  //   LocationPermission permission = await Geolocator.checkPermission();
-  //   if (permission == LocationPermission.denied ||
-  //       permission == LocationPermission.deniedForever) {
-  //     permission = await Geolocator.requestPermission();
-  //     if (permission == LocationPermission.denied ||
-  //         permission == LocationPermission.deniedForever) {
-  //       Get.snackbar('Permission Denied', 'Location access is required.');
-  //       return null;
-  //     }
-  //   }
-  //   final LocationSettings locationSettings = LocationSettings(
-  //     accuracy: LocationAccuracy.high,
-  //     distanceFilter: 100,
-  //   );
-  //   return await Geolocator.getCurrentPosition(
-  //     locationSettings: locationSettings,
-  //   );
-  // }
+  Future<Map<String, String>> getDetails() async {
+    String latLng = '';
+    String userLocation = '';
+    String dateTime = '';
+
+    final position = await _getCurrentPosition();
+    if (position != null) {
+      latLng = 'Lat: ${position.latitude}, Long: ${position.longitude}';
+      final placemarks = await placemarkFromCoordinates(
+        position.latitude,
+        position.longitude,
+      );
+      if (placemarks.isNotEmpty) {
+        final p = placemarks.first;
+        userLocation =
+            '${p.name}, ${p.subLocality}, ${p.locality}, ${p.administrativeArea}, ${p.country}';
+      }
+      dateTime = DateFormat('dd MMM yyyy hh:mm a').format(DateTime.now());
+    }
+
+    return {
+      'latLng': latLng,
+      'userLocation': userLocation,
+      'dateTime': dateTime,
+    };
+  }
+
+  Future<Position?> _getCurrentPosition() async {
+    LocationPermission permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied ||
+        permission == LocationPermission.deniedForever) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied ||
+          permission == LocationPermission.deniedForever) {
+        Get.snackbar('Permission Denied', 'Location access is required.');
+        return null;
+      }
+    }
+    final LocationSettings locationSettings = LocationSettings(
+      accuracy: LocationAccuracy.high,
+      distanceFilter: 100,
+    );
+    return await Geolocator.getCurrentPosition(
+      locationSettings: locationSettings,
+    );
+  }
 }

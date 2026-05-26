@@ -30,7 +30,7 @@ class ComplaintController extends GetxController {
   final hodList = [].obs;
   final fieldOfficerList = [].obs;
   final statusList = [].obs;
-  final complaintType = [].obs;
+  // final complaintType = [].obs;
 
   final page = 1.obs;
   final hasNextPage = true.obs;
@@ -40,6 +40,7 @@ class ComplaintController extends GetxController {
   final showHODError = false.obs;
   final showWardError = false.obs;
   final showDepartmentError = false.obs;
+  final RxInt selectedTab = 0.obs;
 
   /// Fetches getComplaintInitial
   Future<void> getComplaintInitial({bool showLoading = true}) async {
@@ -47,22 +48,12 @@ class ComplaintController extends GetxController {
     page.value = 1;
     complaintList.clear();
     final userId = await LocalStorage.getString('user_id') ?? '';
-    // print("Departments: $selectedDepartmentIds");
-    // print("selectedDepartmentFilter: ${[selectedDepartmentFilter.value]}");
-    // print("Status: ${selectedStatus.value ?? ''}");
-    // print("Type: ${selectedType.value ?? ''}");
-    // print("Source: ${selectedSource.value ?? ''}");
-    // print("userId: $userId");
-    // print("getDateParam: ${getDateParam()}");
-    // print("getDateParam: ${getIt<TranslateController>().lang.value}");
-
     try {
       final res = await _apiService.getComplaint(
         userId,
         page.value.toString(),
         [selectedDepartmentFilter.value],
         selectedFilterStatus.value ?? '',
-        selectedType.value ?? '',
         selectedSource.value ?? '',
         getDateParam(),
         getIt<TranslateController>().lang.value == 'mr' ? 'mr' : 'en',
@@ -77,7 +68,7 @@ class ComplaintController extends GetxController {
         }
       }
     } catch (e) {
-      showToastNormal('Something went wrong. Please try again later.');
+      showToastNormal('Something went wrong. Please try again later');
     } finally {
       if (showLoading) isLoading.value = false;
     }
@@ -94,7 +85,6 @@ class ComplaintController extends GetxController {
         page.value.toString(),
         [selectedDepartmentFilter.value],
         selectedFilterStatus.value ?? '',
-        selectedType.value ?? '',
         selectedSource.value ?? '',
         getDateParam(),
         getIt<TranslateController>().lang.value == 'mr' ? 'mr' : 'en',
@@ -128,6 +118,80 @@ class ComplaintController extends GetxController {
       // debugPrint("Login error: $e");
     } finally {
       isMoreLoading.value = false;
+    }
+  }
+
+  ////////////////////////////////Corporator Complaints//////////////////////////////
+
+  final isCorpLoading = false.obs;
+  final corpPage = 1.obs;
+  final hasCorpNextPage = true.obs;
+  final isCorpMoreLoading = false.obs;
+  final corpComplaintList = [].obs;
+
+  /// Fetches getCorporatorComplaintInitial
+  Future<void> getCorporatorComplaintInitial({bool showLoading = true}) async {
+    if (showLoading) isCorpLoading.value = true;
+    corpPage.value = 1;
+    corpComplaintList.clear();
+    final userId = await LocalStorage.getString('user_id') ?? '';
+    try {
+      final res = await _apiService.getCorpComp(
+        userId,
+        corpPage.value.toString(),
+        [selectedDepartmentFilter.value],
+        selectedFilterStatus.value ?? '',
+        selectedSource.value ?? '',
+        getDateParam(),
+        getIt<TranslateController>().lang.value == 'mr' ? 'mr' : 'en',
+      );
+      if (res['common']['status'] == true) {
+        final data = res['data'];
+        if (data is Map) {
+          corpComplaintList.value = data['complaints'] ?? [];
+        } else {
+          corpComplaintList.value = data;
+        }
+      }
+    } catch (e) {
+      showToastNormal('Something went wrong. Please try again later');
+    } finally {
+      if (showLoading) isCorpLoading.value = false;
+    }
+  }
+
+  /// Fetches getCorporatorComplaintLoadMore
+  Future<void> getCorporatorComplaintLoadMore() async {
+    isCorpMoreLoading.value = true;
+    final userId = await LocalStorage.getString('user_id') ?? '';
+    try {
+      corpPage.value += 1;
+      final res = await _apiService.getCorpComp(
+        userId,
+        corpPage.value.toString(),
+        [selectedDepartmentFilter.value],
+        selectedFilterStatus.value ?? '',
+        selectedSource.value ?? '',
+        getDateParam(),
+        getIt<TranslateController>().lang.value == 'mr' ? 'mr' : 'en',
+      );
+      if (res['common']['status'] == true) {
+        final data = res['data'];
+        final List fetchedPosts;
+        if (data is Map) {
+          fetchedPosts = data['complaints'] ?? [];
+        } else {
+          fetchedPosts = data;
+        }
+
+        if (fetchedPosts.isNotEmpty) {
+          corpComplaintList.addAll(fetchedPosts);
+        } else {
+          hasCorpNextPage.value = false;
+        }
+      }
+    } finally {
+      isCorpMoreLoading.value = false;
     }
   }
 
@@ -172,7 +236,7 @@ class ComplaintController extends GetxController {
         );
       }
     } catch (e) {
-      showToastNormal('Something went wrong. Please try again later.');
+      showToastNormal('Something went wrong. Please try again later');
       // debugPrint("Login error: $e");
     } finally {
       isDetailsLoading.value = false;
@@ -222,10 +286,10 @@ class ComplaintController extends GetxController {
       if (res['common']['status'] == true) {
         departmentList.value = res['data'] ?? [];
       } else {
-        showToastNormal('Something went wrong. Please try again later.');
+        showToastNormal('Something went wrong. Please try again later');
       }
     } catch (e) {
-      showToastNormal('Something went wrong. Please try again later.');
+      showToastNormal('Something went wrong. Please try again later');
       // debugPrint("Login error: $e");
     } finally {
       isDepartmentLoading.value = false;
@@ -242,11 +306,11 @@ class ComplaintController extends GetxController {
       } else {
         showToastNormal(
           res['common']['message'] ??
-              'Something went wrong. Please try again later.',
+              'Something went wrong. Please try again later',
         );
       }
     } catch (e) {
-      showToastNormal('Something went wrong. Please try again later.');
+      showToastNormal('Something went wrong. Please try again later');
       // debugPrint("Login error: $e");
     } finally {
       isWardLoading.value = false;
@@ -319,7 +383,7 @@ class ComplaintController extends GetxController {
   final selectedStatusFilter = RxnString();
 
   // Complaint Type
-  final selectedType = RxnString();
+  // final selectedType = RxnString();
 
   // Complaint Source
   final sourceList = [
@@ -335,7 +399,7 @@ class ComplaintController extends GetxController {
 
   Future<void> loadInitialData() async {
     mainLoader.value = true;
-    await Future.wait([getDepartmentFilter(), getComplaintType(), getStatus()]);
+    await Future.wait([getDepartmentFilter(), getStatus()]);
 
     mainLoader.value = false;
   }
@@ -345,7 +409,7 @@ class ComplaintController extends GetxController {
     if (data != null) {
       departments.value = List<Map<String, dynamic>>.from(data);
     }
-    getComplaintType();
+    // getComplaintType();
     // initDepartmentSelection();
   }
 
@@ -381,7 +445,7 @@ class ComplaintController extends GetxController {
     selectedDepartmentFilter.value = '';
     selectedDateRange.value = null;
     if (!isHome) selectedFilterStatus.value = null;
-    selectedType.value = null;
+    // selectedType.value = null;
     selectedSource.value = null;
     customStart = null;
     customEnd = null;
@@ -389,7 +453,13 @@ class ComplaintController extends GetxController {
 
   void applyFilters() async {
     Get.back();
-    await getComplaintInitial();
+
+    if (selectedTab.value == 0) {
+      await getComplaintInitial();
+    } else {
+      await getCorporatorComplaintInitial();
+    }
+    // await getComplaintInitial();
   }
 
   void initDepartmentSelection() {
@@ -403,39 +473,44 @@ class ComplaintController extends GetxController {
       selectedDepartmentFilter.value = onlyDept['id'].toString();
 
       // Fetch complaint types automatically
-      getComplaintType();
+      // getComplaintType();
     } else {
       // Multiple departments: clear selection
       selectedDepartmentIds.clear();
       selectedDepartmentName.clear();
       selectedDepartmentFilter.value = '';
-      complaintType.clear();
+      // complaintType.clear();
     }
   }
 
-  Future<void> getComplaintType() async {
-    if (departments.isNotEmpty) {
-      if (selectedDepartmentFilter.value.isEmpty) {
-        selectedDepartmentFilter.value = departments.first['id'].toString();
-      }
-    }
-
-    final userId = await LocalStorage.getString('user_id') ?? '';
-    try {
-      final res = await _apiService.getComplaintType(
-        userId,
-        selectedDepartmentFilter.value.toString(),
-      );
-      if (res['common']['status'] == true) {
-        complaintType.value = res['data'] ?? [];
-      } else {
-        // showToastNormal(res['common']['message'] ?? 'Error fetching status');
-      }
-    } catch (e) {
-      showToastNormal('Something went wrong. Please try again later.');
-      // debugPrint("Login error: $e");
-    } finally {}
-  }
+  // Future<void> getComplaintType() async {
+  //   if (departments.isNotEmpty) {
+  //     if (selectedDepartmentFilter.value.isEmpty) {
+  //       selectedDepartmentFilter.value = departments.first['id'].toString();
+  //     }
+  //   }
+  //
+  //   final userId = await LocalStorage.getString('user_id') ?? '';
+  //   try {
+  //     print(selectedDepartmentFilter.value.toString());
+  //     print('selectedDepartmentFilter.value.toString()');
+  //     final res = await _apiService.getComplaintType(
+  //       userId,
+  //       selectedDepartmentFilter.value.toString(),
+  //     );
+  //     if (res['common']['status'] == true) {
+  //       complaintType.value = res['data'] ?? [];
+  //     } else {
+  //       // showToastNormal(res['common']['message'] ?? 'Error fetching status');
+  //     }
+  //   } catch (e) {
+  //     print('error=========>$e');
+  //     showToastNormal(
+  //       'Something went wrong. Please try again later. getComplaintType',
+  //     );
+  //     // debugPrint("Login error: $e");
+  //   } finally {}
+  // }
 
   final DateFormat _dateFormat = DateFormat('yyyy-MM-dd');
 

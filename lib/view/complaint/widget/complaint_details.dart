@@ -325,6 +325,10 @@ class _ComplaintDetailsState extends State<ComplaintDetails> {
     return _buildDetailItem(
       icon: HugeIcons.strokeRoundedUser02,
       label: "Complainant",
+      isCorporator:
+          controller.complaintDetails['is_corporator_complaint'] == true
+          ? true
+          : false,
       value: controller.complaintDetails['name']?.toString() ?? '',
       showEdit: number.isNotEmpty,
       onEdit: () {
@@ -373,6 +377,7 @@ class _ComplaintDetailsState extends State<ComplaintDetails> {
     required String label,
     required String value,
     bool showEdit = false,
+    bool isCorporator = false,
     VoidCallback? onEdit,
   }) {
     return Padding(
@@ -394,13 +399,34 @@ class _ComplaintDetailsState extends State<ComplaintDetails> {
                   ),
                 ),
                 SizedBox(height: 2.h),
-                CustomText(
-                  title: capitalize(value),
-                  maxLines: 2,
-                  textAlign: TextAlign.start,
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.w500,
-                ),
+                if (isCorporator)
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      CustomText(
+                        title: capitalize(value),
+                        maxLines: 2,
+                        textAlign: TextAlign.start,
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      CustomText(
+                        title: '(Corporator)',
+                        maxLines: 2,
+                        textAlign: TextAlign.start,
+                        fontSize: 14.sp,
+                        color: primaryColor,
+                      ),
+                    ],
+                  )
+                else
+                  CustomText(
+                    title: capitalize(value),
+                    maxLines: 2,
+                    textAlign: TextAlign.start,
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w500,
+                  ),
               ],
             ),
           ),

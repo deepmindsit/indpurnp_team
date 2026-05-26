@@ -41,7 +41,7 @@ class _ComplaintFilterState extends State<ComplaintFilter> {
                       _buildStatus(),
 
                       /// Complaint Type
-                      _buildComplaintType(),
+                      // _buildComplaintType(),
 
                       /// Complaint Source
                       _buildSource(),
@@ -102,71 +102,71 @@ class _ComplaintFilterState extends State<ComplaintFilter> {
     );
   }
 
-  Widget _buildComplaintType() {
-    return Obx(
-      () => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: EdgeInsets.only(left: 8.0, bottom: 6),
-            child: buildLabel('Complaint Type', isRequired: false),
-          ),
-          ButtonTheme(
-            alignedDropdown: true,
-            buttonColor: Colors.grey[700],
-            splashColor: Colors.transparent,
-            materialTapTargetSize: MaterialTapTargetSize.padded,
-            child: DropdownButtonFormField(
-              borderRadius: BorderRadius.circular(12.r),
-              initialValue: controller.selectedType.value,
-              icon: const Icon(Icons.keyboard_arrow_down, color: Colors.grey),
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.all(12.w),
-                isDense: true,
-                filled: true,
-                fillColor: Colors.white,
-                focusedBorder: buildOutlineInputBorder(),
-                enabledBorder: buildOutlineInputBorder(),
-                errorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12.r),
-                  borderSide: const BorderSide(color: Colors.red),
-                ),
-                disabledBorder: buildOutlineInputBorder(),
-                border: buildOutlineInputBorder(),
-                hintText: 'Select Complaint Type',
-                errorStyle: TextStyle(fontSize: 12.sp),
-                errorMaxLines: 1,
-              ),
-              validator: (value) =>
-                  value == null ? 'Please select Complaint Type' : null,
-              dropdownColor: Colors.white,
-              hint: Text(
-                'Select Complaint Type',
-                style: TextStyle(fontSize: 14.sp, color: primaryGrey),
-              ),
-              style: Theme.of(context).textTheme.bodyMedium,
-              isExpanded: true,
-              elevation: 4,
-              items: controller.complaintType.map((value) {
-                return DropdownMenuItem(
-                  value: value['id'].toString(),
-                  child: CustomText(
-                    textAlign: TextAlign.start,
-                    title: getIt<TranslateController>().lang.value == 'en'
-                        ? value['name']
-                        : value['name_mr'],
-                    color: Colors.black,
-                    fontSize: 14.sp,
-                  ),
-                );
-              }).toList(),
-              onChanged: (val) => controller.selectedType.value = val!,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  // Widget _buildComplaintType() {
+  //   return Obx(
+  //     () => Column(
+  //       crossAxisAlignment: CrossAxisAlignment.start,
+  //       children: [
+  //         Padding(
+  //           padding: EdgeInsets.only(left: 8.0, bottom: 6),
+  //           child: buildLabel('Complaint Type', isRequired: false),
+  //         ),
+  //         ButtonTheme(
+  //           alignedDropdown: true,
+  //           buttonColor: Colors.grey[700],
+  //           splashColor: Colors.transparent,
+  //           materialTapTargetSize: MaterialTapTargetSize.padded,
+  //           child: DropdownButtonFormField(
+  //             borderRadius: BorderRadius.circular(12.r),
+  //             initialValue: controller.selectedType.value,
+  //             icon: const Icon(Icons.keyboard_arrow_down, color: Colors.grey),
+  //             decoration: InputDecoration(
+  //               contentPadding: EdgeInsets.all(12.w),
+  //               isDense: true,
+  //               filled: true,
+  //               fillColor: Colors.white,
+  //               focusedBorder: buildOutlineInputBorder(),
+  //               enabledBorder: buildOutlineInputBorder(),
+  //               errorBorder: OutlineInputBorder(
+  //                 borderRadius: BorderRadius.circular(12.r),
+  //                 borderSide: const BorderSide(color: Colors.red),
+  //               ),
+  //               disabledBorder: buildOutlineInputBorder(),
+  //               border: buildOutlineInputBorder(),
+  //               hintText: 'Select Complaint Type',
+  //               errorStyle: TextStyle(fontSize: 12.sp),
+  //               errorMaxLines: 1,
+  //             ),
+  //             validator: (value) =>
+  //                 value == null ? 'Please select Complaint Type' : null,
+  //             dropdownColor: Colors.white,
+  //             hint: Text(
+  //               'Select Complaint Type',
+  //               style: TextStyle(fontSize: 14.sp, color: primaryGrey),
+  //             ),
+  //             style: Theme.of(context).textTheme.bodyMedium,
+  //             isExpanded: true,
+  //             elevation: 4,
+  //             items: controller.complaintType.map((value) {
+  //               return DropdownMenuItem(
+  //                 value: value['id'].toString(),
+  //                 child: CustomText(
+  //                   textAlign: TextAlign.start,
+  //                   title: getIt<TranslateController>().lang.value == 'en'
+  //                       ? value['name']
+  //                       : value['name_mr'],
+  //                   color: Colors.black,
+  //                   fontSize: 14.sp,
+  //                 ),
+  //               );
+  //             }).toList(),
+  //             onChanged: (val) => controller.selectedType.value = val!,
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   Widget _buildSource() {
     return AppDropdownField(

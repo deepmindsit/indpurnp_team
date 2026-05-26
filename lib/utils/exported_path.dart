@@ -16,6 +16,9 @@ export 'package:indapur_team/view/dashboard/view/dashboard.dart';
 export 'package:indapur_team/common/delete_account.dart';
 export 'package:indapur_team/common/notification_list.dart';
 export 'package:indapur_team/view/dashboard/widget/help_and_support.dart';
+export 'package:indapur_team/view/complaint/widget/all_complaint.dart';
+export 'package:indapur_team/view/complaint/widget/corporator_complaint.dart';
+export 'package:indapur_team/view/complaint/widget/filter.dart';
 
 //widget
 export 'package:indapur_team/utils/image_path.dart';
@@ -70,6 +73,7 @@ export 'package:indapur_team/view/dashboard/controller/update_firebase_token.dar
 export 'package:indapur_team/view/dashboard/controller/notification_controller.dart';
 export 'package:indapur_team/utils/translate_controller.dart';
 export 'package:indapur_team/view/onboarding/controller/splash_controller.dart';
+export 'package:indapur_team/view/add_corp_complaint/controlller/add_corp_controller.dart';
 
 //plugins
 export 'package:get/get.dart';
