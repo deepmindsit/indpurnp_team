@@ -56,6 +56,7 @@ class _AddCorpComplaintState extends State<AddCorpComplaint> {
                           fillColor: Colors.white,
                           // isEnabled: true,
                           isDynamic: true,
+                          isRequired: true,
                           value: controller.selectedType.value,
                           title: 'Complaint Type',
                           items: controller.complaintTypeList,
@@ -70,7 +71,7 @@ class _AddCorpComplaintState extends State<AddCorpComplaint> {
                         SizedBox(height: 12.h),
                         AppDropdownField(
                           fillColor: Colors.white,
-                          // isEnabled: true,
+                          isRequired: true,
                           isDynamic: true,
                           value: controller.selectedWard.value,
                           title: 'Ward',
@@ -331,7 +332,24 @@ class _AddCorpComplaintState extends State<AddCorpComplaint> {
   Widget _buildLabel(String text) {
     return Padding(
       padding: EdgeInsets.only(left: 4.w, bottom: 6.h),
-      child: buildLabel(text),
+      child: Row(
+        children: [
+          TranslatedText(
+            title: text,
+            fontSize: 14.sp,
+            fontWeight: FontWeight.bold,
+            color: Theme.of(Get.context!).textTheme.bodyMedium!.color,
+          ),
+          AppText(
+            text: ' *',
+            fontSize: 14.sp,
+            fontWeight: FontWeight.bold,
+            color: Colors.red,
+          ),
+        ],
+      ),
+
+      // buildLabel(text,isRequired: true),
     );
   }
 

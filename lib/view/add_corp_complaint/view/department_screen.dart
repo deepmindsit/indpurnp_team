@@ -24,10 +24,12 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(title: 'Departments', showBackButton: true),
-      body: Obx(
-        () => controller.isDeptLoading.isTrue
-            ? AppLoader()
-            : CustomScrollView(slivers: [departmentSection()]),
+      body: SafeArea(
+        child: Obx(
+          () => controller.isDeptLoading.isTrue
+              ? AppLoader()
+              : CustomScrollView(slivers: [departmentSection()]),
+        ),
       ),
     );
   }
@@ -50,22 +52,24 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
                 columnCount: controller.departmentList.length,
                 child: ScaleAnimation(
                   child: FadeInAnimation(
-                    child: DepartmentTile(
-                      onTap: () {
-                        Get.to(
-                          () => AddCorpComplaint(
-                            deptId: controller.departmentList[index]['id']
-                                .toString(),
-                            deptName: controller.departmentList[index]['name']
-                                .toString(),
-                          ),
-                        );
-                      },
-                      isLink: false,
-                      department: controller.departmentList[index]['id']
-                          .toString(),
-                      image: controller.departmentList[index]['image'],
-                      dept: controller.departmentList[index]['name'],
+                    child: SafeArea(
+                      child: DepartmentTile(
+                        onTap: () {
+                          Get.to(
+                            () => AddCorpComplaint(
+                              deptId: controller.departmentList[index]['id']
+                                  .toString(),
+                              deptName: controller.departmentList[index]['name']
+                                  .toString(),
+                            ),
+                          );
+                        },
+                        isLink: false,
+                        department: controller.departmentList[index]['id']
+                            .toString(),
+                        image: controller.departmentList[index]['image'],
+                        dept: controller.departmentList[index]['name'],
+                      ),
                     ),
                   ),
                 ),

@@ -1,3 +1,5 @@
+import 'package:ui_package/ui_package.dart';
+
 import '../utils/exported_path.dart';
 
 /// TextField
@@ -65,25 +67,51 @@ Widget buildLabel(
   Color color = Colors.black,
 }) {
   return Padding(
-    padding: const EdgeInsets.only(bottom: 6.0),
-    child: Align(
-      alignment: Alignment.centerLeft,
-      child: RichText(
-        text: TextSpan(
-          text: text,
-          style: TextStyle(
-            fontSize: 14.sp,
-            fontWeight: FontWeight.bold,
-            color: Theme.of(Get.context!).textTheme.bodyMedium!.color,
-          ),
-          children:
-              isRequired
-                  ? [TextSpan(text: ' *', style: TextStyle(color: Colors.red))]
-                  : [],
+    padding: EdgeInsets.only(left: 4.w, bottom: 6.h),
+    child: Row(
+      children: [
+        TranslatedText(
+          title: text,
+          fontSize: 14.sp,
+          fontWeight: FontWeight.bold,
+          color: Theme.of(Get.context!).textTheme.bodyMedium!.color,
         ),
-      ),
+        if(isRequired)
+        AppText(
+          text: ' *',
+          fontSize: 14.sp,
+          fontWeight: FontWeight.bold,
+          color: Colors.red,
+        ),
+      ],
     ),
   );
+
+
+  //   Padding(
+  //   padding: const EdgeInsets.only(bottom: 6.0),
+  //   child: Align(
+  //     alignment: Alignment.centerLeft,
+  //     child: RichText(
+  //       text: TextSpan(
+  //         text: text,
+  //         style: TextStyle(
+  //           fontSize: 14.sp,
+  //           fontWeight: FontWeight.bold,
+  //           color: Theme.of(Get.context!).textTheme.bodyMedium!.color,
+  //         ),
+  //         children: isRequired
+  //             ? [
+  //                 TextSpan(
+  //                   text: ' *',
+  //                   style: TextStyle(color: Colors.red),
+  //                 ),
+  //               ]
+  //             : [],
+  //       ),
+  //     ),
+  //   ),
+  // );
 }
 
 // Widget buildLabel(String text) {

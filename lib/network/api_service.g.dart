@@ -31,7 +31,7 @@ class _ApiService implements ApiService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://192.168.29.37/myindapurnp/api/team/v1/sign-in',
+            'https://indapurnp.in/api/team/v1/sign-in',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -53,7 +53,7 @@ class _ApiService implements ApiService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://192.168.29.37/myindapurnp/api/team/v1/get-complaint-status',
+            'https://indapurnp.in/api/team/v1/get-complaint-status',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -91,7 +91,7 @@ class _ApiService implements ApiService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://192.168.29.37/myindapurnp/api/team/v1/get-complaint',
+            'https://indapurnp.in/api/team/v1/get-complaint',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -129,7 +129,7 @@ class _ApiService implements ApiService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://192.168.29.37/myindapurnp/api/team/v1/get-corporator-complaints',
+            'https://indapurnp.in/api/team/v1/get-corporator-complaints',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -157,7 +157,7 @@ class _ApiService implements ApiService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://192.168.29.37/myindapurnp/api/team/v1/get-complaint-details',
+            'https://indapurnp.in/api/team/v1/get-complaint-details',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -180,7 +180,7 @@ class _ApiService implements ApiService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://192.168.29.37/myindapurnp/api/team/v1/get-complaint-type',
+            'https://indapurnp.in/api/team/v1/get-complaint-type',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -202,7 +202,7 @@ class _ApiService implements ApiService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://192.168.29.37/myindapurnp/api/team/v1/get-department',
+            'https://indapurnp.in/api/team/v1/get-department',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -224,7 +224,7 @@ class _ApiService implements ApiService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://192.168.29.37/myindapurnp/api/team/v1/get-ward',
+            'https://indapurnp.in/api/team/v1/get-ward',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -272,7 +272,7 @@ class _ApiService implements ApiService {
           )
           .compose(
             _dio.options,
-            'http://192.168.29.37/myindapurnp/api/team/v1/add-complaint-comment',
+            'https://indapurnp.in/api/team/v1/add-complaint-comment',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -294,7 +294,7 @@ class _ApiService implements ApiService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://192.168.29.37/myindapurnp/api/team/v1/get-task',
+            'https://indapurnp.in/api/team/v1/get-task',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -317,7 +317,7 @@ class _ApiService implements ApiService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://192.168.29.37/myindapurnp/api/team/v1/get-task-details',
+            'https://indapurnp.in/api/team/v1/get-task-details',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -339,7 +339,7 @@ class _ApiService implements ApiService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://192.168.29.37/myindapurnp/api/team/v1/get-priority',
+            'https://indapurnp.in/api/team/v1/get-priority',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -361,7 +361,7 @@ class _ApiService implements ApiService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://192.168.29.37/myindapurnp/api/team/v1/get-task-status',
+            'https://indapurnp.in/api/team/v1/get-task-status',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -383,7 +383,7 @@ class _ApiService implements ApiService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://192.168.29.37/myindapurnp/api/team/v1/get-assignee',
+            'https://indapurnp.in/api/team/v1/get-assignee',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -423,7 +423,7 @@ class _ApiService implements ApiService {
           )
           .compose(
             _dio.options,
-            'http://192.168.29.37/myindapurnp/api/team/v1/add-task-comment',
+            'https://indapurnp.in/api/team/v1/add-task-comment',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -469,7 +469,7 @@ class _ApiService implements ApiService {
           )
           .compose(
             _dio.options,
-            'http://192.168.29.37/myindapurnp/api/team/v1/add-new-task',
+            'https://indapurnp.in/api/team/v1/add-new-task',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -491,7 +491,7 @@ class _ApiService implements ApiService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://192.168.29.37/myindapurnp/api/team/v1/get-help-support',
+            'https://indapurnp.in/api/team/v1/get-help-support',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -514,7 +514,7 @@ class _ApiService implements ApiService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://192.168.29.37/myindapurnp/api/team/v1/get-legal-page',
+            'https://indapurnp.in/api/team/v1/get-legal-page',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -536,7 +536,7 @@ class _ApiService implements ApiService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://192.168.29.37/myindapurnp/api/team/v1/get-profile',
+            'https://indapurnp.in/api/team/v1/get-profile',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -580,7 +580,7 @@ class _ApiService implements ApiService {
           )
           .compose(
             _dio.options,
-            'http://192.168.29.37/myindapurnp/api/team/v1/update',
+            'https://indapurnp.in/api/team/v1/update',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -602,7 +602,7 @@ class _ApiService implements ApiService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://192.168.29.37/myindapurnp/api/team/v1/delete-account',
+            'https://indapurnp.in/api/team/v1/delete-account',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -624,7 +624,7 @@ class _ApiService implements ApiService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://192.168.29.37/myindapurnp/api/team/v1/get-files',
+            'https://indapurnp.in/api/team/v1/get-files',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -647,7 +647,7 @@ class _ApiService implements ApiService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://192.168.29.37/myindapurnp/api/team/v1/get-file-details',
+            'https://indapurnp.in/api/team/v1/get-file-details',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -687,7 +687,7 @@ class _ApiService implements ApiService {
           )
           .compose(
             _dio.options,
-            'http://192.168.29.37/myindapurnp/api/team/v1/add-file-comment',
+            'https://indapurnp.in/api/team/v1/add-file-comment',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -710,7 +710,7 @@ class _ApiService implements ApiService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://192.168.29.37/myindapurnp/api/team/v1/get-dashboard',
+            'https://indapurnp.in/api/team/v1/get-dashboard',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -733,7 +733,7 @@ class _ApiService implements ApiService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://192.168.29.37/myindapurnp/api/team/v1/get-kms',
+            'https://indapurnp.in/api/team/v1/get-kms',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -756,7 +756,7 @@ class _ApiService implements ApiService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://192.168.29.37/myindapurnp/api/team/v1/update-firebase-token',
+            'https://indapurnp.in/api/team/v1/update-firebase-token',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -779,7 +779,7 @@ class _ApiService implements ApiService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://192.168.29.37/myindapurnp/api/team/v1/get-notification',
+            'https://indapurnp.in/api/team/v1/get-notification',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -802,7 +802,7 @@ class _ApiService implements ApiService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://192.168.29.37/myindapurnp/api/team/v1/read-notification',
+            'https://indapurnp.in/api/team/v1/read-notification',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -825,7 +825,7 @@ class _ApiService implements ApiService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://192.168.29.37/myindapurnp/api/team/v1/get-team-department-list',
+            'https://indapurnp.in/api/team/v1/get-team-department-list',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -849,7 +849,7 @@ class _ApiService implements ApiService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://192.168.29.37/myindapurnp/api/team/v1/get-team-complaint-type-list',
+            'https://indapurnp.in/api/team/v1/get-team-complaint-type-list',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -872,7 +872,7 @@ class _ApiService implements ApiService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://192.168.29.37/myindapurnp/api/team/v1/get-team-ward-list',
+            'https://indapurnp.in/api/team/v1/get-team-ward-list',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -917,7 +917,7 @@ class _ApiService implements ApiService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://192.168.29.37/myindapurnp/api/team/v1/add-corporator-complaint',
+            'https://indapurnp.in/api/team/v1/add-corporator-complaint',
             queryParameters: queryParameters,
             data: _data,
           )

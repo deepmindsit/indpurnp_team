@@ -83,9 +83,21 @@ class _ComplaintScreenState extends State<ComplaintScreen> {
                         labelColor: Colors.white,
                         unselectedLabelColor: Colors.black87,
                         indicatorSize: TabBarIndicatorSize.tab,
-                        tabs: const [
-                          Tab(text: "All Complaints"),
-                          Tab(text: "My Complaints"),
+                        tabs: [
+                          Tab(
+                            child: TranslatedText(
+                              title: "All Complaints",
+                              fontSize: 16.sp,
+                              color: Colors.white,
+                            ),
+                          ),
+                          Tab(
+                            child: TranslatedText(
+                              title: "My Complaints",
+                              fontSize: 16.sp,
+                              color: Colors.white,
+                            ),
+                          ),
                         ],
                       ),
                     ),

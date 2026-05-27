@@ -228,6 +228,8 @@ class ComplaintController extends GetxController {
         getIt<TranslateController>().lang.value == 'mr' ? 'mr' : 'en',
       );
       if (res['common']['status'] == true) {
+        print('res data');
+        print(res['data'][0]);
         complaintDetails.value = res['data'][0] ?? {};
       } else {
         showToastNormal(
